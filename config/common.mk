@@ -213,4 +213,14 @@ include vendor/lineage/config/version.mk
 -include vendor/lineage-priv/keys/keys.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/lineage/config/partner_gms.mk
+
+# MICROG and GAPPS
+ifeq ($(WITH_MICROG),true)
+include vendor/lineage/config/partner_gms.mk
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    lineage.updater.uri=https://downloads.sourceforge.net/project/sweet-12/ROMS/Lineage/microg/update.json
+else ifeq ($(WITH_GMS),true)
+include vendor/gms/products/gms.mk
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    lineage.updater.uri=https://downloads.sourceforge.net/project/sweet-12/ROMS/Lineage/gapps/update.json
+endif
